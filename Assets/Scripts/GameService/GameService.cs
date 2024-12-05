@@ -1,4 +1,5 @@
 
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameService : MonoBehaviour
@@ -22,15 +23,19 @@ public class GameService : MonoBehaviour
 
     //Data
     [SerializeField] PlayerView playerView;
-
+    [SerializeField] List<WeaponList> weaponList=new List<WeaponList>();
+    [SerializeField] Transform weaponHolder;
 
     //Services
     private PlayerService playerService;
+    private WeaponService weaponService;
     public PlayerService PlayerService {  get { return playerService; } }
+    public WeaponService WeaponService { get { return weaponService; } }
 
     private void Init()
     {
         playerService = new PlayerService(playerView);
+        weaponService = new WeaponService(weaponList, weaponHolder);
     }
 
     public void OnSceneChange()

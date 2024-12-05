@@ -29,11 +29,27 @@ public class PlayerView : MonoBehaviour
         float vertical = Input.GetAxisRaw("Vertical");
         bool jump = Input.GetButtonDown("Jump");
 
+        CheckWeaponSpawner();
 
         playerController.RotatePlayer(mouseX, mouseY,playerCamera);
         playerController.MovePlayer(horizontal,vertical,isGrounded);
         if (isGrounded) { playerController.PerformJump(jump); }
     }
+
+    private void CheckWeaponSpawner()
+    {
+        if(Input.GetKey(KeyCode.Alpha1))
+        {
+            playerController.SpawnWeapon(1);
+        }else if (Input.GetKey(KeyCode.Alpha2))
+        {
+            playerController.SpawnWeapon(2);
+        }else if(Input.GetKey(KeyCode.Alpha3))
+        {
+            playerController.SpawnWeapon(3);
+        }
+    }
+
 
     public void SetController(PlayerController playerController)
     {

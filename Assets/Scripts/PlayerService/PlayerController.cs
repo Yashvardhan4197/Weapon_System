@@ -17,6 +17,8 @@ public class PlayerController
     private bool isJumped;
     public int MouseSensitivity { get { return mouseSensitivity; } }
     public float MovementSpeed { get { return movementSpeed; } }
+    public Transform PlayerTransform { get { return playerTransform; } }
+
 
     public PlayerController(PlayerView playerView)
     {
@@ -85,5 +87,10 @@ public class PlayerController
     public void SetJumpSpeed(float jumpSpeed)
     {
         this.jumpSpeed = jumpSpeed;
+    }
+
+    public void SpawnWeapon(int weaponNumber)
+    {
+        GameService.Instance.WeaponService.SpawnWeapon(weaponNumber);
     }
 }
