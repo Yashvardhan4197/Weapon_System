@@ -8,6 +8,7 @@ public class WeaponView : MonoBehaviour
     [SerializeField] int swaySpeed;
     private WeaponController weaponController;
 
+
     public void SetController(WeaponController weaponController)
     {
         this.weaponController = weaponController;
@@ -17,6 +18,15 @@ public class WeaponView : MonoBehaviour
     {
         AddSwayInMotion();
         Shoot();
+        ReloadWeapon();
+    }
+
+    private void ReloadWeapon()
+    {
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            weaponController.ReloadWeapon();
+        }
     }
 
     private void AddSwayInMotion()
@@ -33,9 +43,13 @@ public class WeaponView : MonoBehaviour
 
     private void Shoot()
     {
-        if(Input.GetMouseButtonDown(0))
+        if(Input.GetMouseButton(0))
         {
             weaponController?.Shoot();
         }
     }
+
+
+    public Transform GetMuzzleTransform() => muzzleTransform;
+
 }

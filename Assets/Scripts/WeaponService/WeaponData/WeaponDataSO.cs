@@ -7,7 +7,15 @@ public class WeaponDataSO:ScriptableObject
 {
     public int damage;
     public int range;
-    public int totalCapacity;
+    public int reloadCapacity;
     public int reloadTime;
+    public int currentCapacity;
+    public int totalCapacity;
+    public float fireRate;
+    public void OnReload()
+    {
+        currentCapacity = totalCapacity;
+        reloadCapacity--;
+    }
 }
 

@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75c38565a2bee44469bb6d95219c95a5, type: 3}
   m_Name: Pistol-Weapon
   m_EditorClassIdentifier: 
-  damage: 0
-  range: 0
-  totalCapacity: 0
-  reloadTime: 0
+  damage: 5
+  range: 100
+  totalCapacity: 10
+  reloadTime: 2
+  currentCapacity: 0
