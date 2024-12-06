@@ -22,6 +22,7 @@ public class PlayerView : MonoBehaviour,IDamageAble
     private void Start()
     {
         Cursor.lockState=CursorLockMode.Locked;
+        Cursor.visible = false;
     }
     private void Update()
     {
