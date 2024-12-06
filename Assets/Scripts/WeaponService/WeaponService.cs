@@ -8,12 +8,13 @@ public class WeaponService
     private WeaponController weaponController;
     private WeaponView currentSpawnedWeapon;
     private Transform weaponHolder;
+    private Dictionary<int, WeaponView> spawnedWeapons=new Dictionary<int, WeaponView>();
     public WeaponService(List<WeaponList> weaponList, Transform weaponHolder)
     {
         weaponController = new WeaponController(weaponHolder);
         this.weaponList = weaponList;
         this.weaponHolder = weaponHolder;
-        OnGameStart(); //Change after setting UI and gameLoop;
+        OnGameStart();
     }
 
     public void OnGameStart()
@@ -22,18 +23,34 @@ public class WeaponService
         {
             weapon.weaponData.ResetData();
         }
+        spawnedWeapons.Clear();
+        SpawnWeapons();
     }
 
-    public void SpawnWeapon(int weaponNumber)
+    private void SpawnWeapons()
     {
-        if(weaponNumber<=weaponList.Count&&weaponNumber!=0)
+        int i = 1;
+        foreach(WeaponList weapon in weaponList)
         {
-            Object.Destroy(currentSpawnedWeapon?.gameObject);
-            currentSpawnedWeapon = Object.Instantiate(weaponList[weaponNumber-1].weaponView);
+            currentSpawnedWeapon = Object.Instantiate(weapon.weaponView);
             currentSpawnedWeapon.transform.SetParent(weaponHolder);
             currentSpawnedWeapon.transform.localPosition = Vector3.zero;
             currentSpawnedWeapon.transform.localEulerAngles = Vector3.zero;
-            weaponController.SetView(currentSpawnedWeapon, weaponList[weaponNumber-1].weaponData);
+            spawnedWeapons.Add(i, currentSpawnedWeapon);
+            currentSpawnedWeapon.gameObject.SetActive(false);
+            i++;
+        }
+        currentSpawnedWeapon = null;
+    }
+
+    public void UseWeapon(int weaponNumber)
+    {
+        if(weaponNumber<=weaponList.Count&&weaponNumber!=0)
+        {
+            currentSpawnedWeapon?.gameObject.SetActive(false);
+            weaponController.SetView(spawnedWeapons[weaponNumber], weaponList[weaponNumber-1].weaponData);
+            spawnedWeapons[weaponNumber].gameObject.SetActive(true);
+            currentSpawnedWeapon = spawnedWeapons[weaponNumber];
         }
         
     }

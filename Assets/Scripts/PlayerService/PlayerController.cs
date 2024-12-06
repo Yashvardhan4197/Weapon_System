@@ -93,7 +93,7 @@ public class PlayerController
 
     public void SpawnWeapon(int weaponNumber)
     {
-        GameService.Instance.WeaponService.SpawnWeapon(weaponNumber);
+        GameService.Instance.WeaponService.UseWeapon(weaponNumber);
     }
 
     public Transform GetCrossHairObjectPositon() => crossHairPosition;
