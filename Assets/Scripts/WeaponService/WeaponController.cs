@@ -52,6 +52,11 @@ public class WeaponController
                 var tracer= Object.Instantiate(weaponData.bulletTracer,ray.origin,Quaternion.identity);
                 tracer.AddPosition(ray.origin);
                 tracer.transform.position = Hit.point;
+                IDamageAble damageAbleObject=Hit.transform.GetComponent<IDamageAble>();
+                if(damageAbleObject!=null)
+                {
+                    damageAbleObject.TakeDamage(weaponData.damage);
+                }
             }
             weaponData.currentCapacity--;
         }

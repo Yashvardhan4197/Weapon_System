@@ -5,9 +5,9 @@ public class PlayerService
 {
     private PlayerController playerController;
 
-    public PlayerService(PlayerView playerView)
+    public PlayerService(PlayerView playerView,float playerHealth)
     {
-        playerController = new PlayerController(playerView);
+        playerController = new PlayerController(playerView,playerHealth);
     }
 
 

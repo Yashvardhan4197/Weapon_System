@@ -23,6 +23,7 @@ public class GameService : MonoBehaviour
 
     //Data
     [SerializeField] PlayerView playerView;
+    [SerializeField] float playerhealth;
     [SerializeField] List<WeaponList> weaponList=new List<WeaponList>();
     [SerializeField] Transform weaponHolder;
 
@@ -34,7 +35,7 @@ public class GameService : MonoBehaviour
 
     private void Init()
     {
-        playerService = new PlayerService(playerView);
+        playerService = new PlayerService(playerView,playerhealth);
         weaponService = new WeaponService(weaponList, weaponHolder);
     }
 

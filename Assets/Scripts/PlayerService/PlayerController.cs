@@ -7,7 +7,6 @@ public class PlayerController
 {
     private PlayerView playerView;
     private Transform playerTransform;
-    private Transform playerCamera;
     private CharacterController characterController;
     private Transform crossHairPosition;
     private float xRotation;
@@ -16,19 +15,19 @@ public class PlayerController
     private float movementSpeed;
     private int mouseSensitivity;
     private float jumpSpeed;
-    private bool isJumped;
     private float playerHealth;
     public int MouseSensitivity { get { return mouseSensitivity; } }
     public float MovementSpeed { get { return movementSpeed; } }
     public Transform PlayerTransform { get { return playerTransform; } }
     public float PlayerHealth {  get { return playerHealth; } }
 
-    public PlayerController(PlayerView playerView)
+    public PlayerController(PlayerView playerView,float playerHealth)
     {
         this.playerView = playerView;
         xRotation = 0;
         playerTransform=playerView.transform;
         playerView.SetController(this);
+        this.playerHealth = playerHealth;
     }
 
     public void RotatePlayer(float mouseX, float mouseY, Transform playerCamera)
@@ -108,5 +107,9 @@ public class PlayerController
         {
             Debug.Log("Player_Dead");
         }
+    }
+    private void SetPlayerHealth(float health)
+    {
+        playerHealth = health;
     }
 }
