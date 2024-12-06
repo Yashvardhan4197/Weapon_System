@@ -14,6 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 5
   range: 100
-  totalCapacity: 10
+  reloadCapacity: 2
   reloadTime: 2
-  currentCapacity: 0
+  currentCapacity: 10
+  totalCapacity: 10
+  fireRate: 15
+  impactParticleSystem: {fileID: 7587837594654732339, guid: 55ed9198f8fa45f41b3267c6c44f80c3, type: 3}
+  muzzleFlashParticleSystem: {fileID: 3681302772659976315, guid: eee157afaa7548f4faf96e201cc480d2, type: 3}

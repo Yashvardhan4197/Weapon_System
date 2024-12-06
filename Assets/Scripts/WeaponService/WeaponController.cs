@@ -9,12 +9,9 @@ public class WeaponController
     private WeaponDataSO weaponData;
     private Transform weaponHolderTransform;
     private bool isReloading;
-    private int currentCapacity;
-    private int reloadCapacity;
     private float nextTimeToFire;
-    public int CurrenCapacity { get {  return currentCapacity; } }
-    public int ReloadCapacity {  get { return reloadCapacity; } }
-
+    private ParticleSystem impactParticleSystem;
+    private ParticleSystem muzzleParticleSystem;
     public Transform WeaponHolderTransform { get { return weaponHolderTransform; } }
 
     public WeaponController(Transform weaponHolderTransform)
@@ -28,30 +25,41 @@ public class WeaponController
         this.weaponData = weaponDataSO;
         weaponView.SetController(this);
         isReloading = false;
-        currentCapacity = weaponData.currentCapacity;
-        reloadCapacity=weaponData.reloadCapacity;
         nextTimeToFire = 0f;
+        impactParticleSystem = weaponView.GetImpactParticleSystem();
+        muzzleParticleSystem = weaponView.getMuzzleParticleSystem();
     }
 
     public void Shoot()
     {
-        if (isReloading == false&&currentCapacity>0 && Time.time>=nextTimeToFire)
+        if (isReloading == false&& weaponData.currentCapacity>0 && Time.time>=nextTimeToFire)
         {
             nextTimeToFire = Time.time + (1 / weaponData.fireRate);
+            Ray ray=new Ray();
             RaycastHit Hit;
-            if (Physics.Raycast(weaponView.GetMuzzleTransform().position, weaponView.GetMuzzleTransform().forward, out Hit, weaponData.range))
+            ray.origin = weaponView.GetMuzzleTransform().position;
+            ray.direction = GameService.Instance.PlayerService.GetPlayerController().GetCrossHairObjectPositon().position - weaponView.GetMuzzleTransform().position;
+            if (Physics.Raycast(ray, out Hit, weaponData.range))
             {
-                Debug.Log(Hit.transform.name);
-                Debug.DrawRay(weaponView.GetMuzzleTransform().position, weaponView.GetMuzzleTransform().forward, Color.cyan, 2f);
+                impactParticleSystem.transform.position = Hit.point;
+                impactParticleSystem.transform.forward = Hit.normal;
+                impactParticleSystem.Emit(1);
+
+                muzzleParticleSystem.transform.position = weaponView.GetMuzzleTransform().position;
+                muzzleParticleSystem.transform.forward= weaponView.GetMuzzleTransform().forward;
+                muzzleParticleSystem.Emit(1);
+
+                var tracer= Object.Instantiate(weaponData.bulletTracer,ray.origin,Quaternion.identity);
+                tracer.AddPosition(ray.origin);
+                tracer.transform.position = Hit.point;
             }
-            currentCapacity--;
-            Debug.Log("CurrentCapacity: " + currentCapacity);
+            weaponData.currentCapacity--;
         }
     }
 
     public void ReloadWeapon()
     {
-        if(currentCapacity<weaponData.totalCapacity && reloadCapacity>0)
+        if(weaponData.currentCapacity <weaponData.totalCapacity && weaponData.currentReloadCapacity>0)
         {
             isReloading=true;
             startReloading();
@@ -61,10 +69,9 @@ public class WeaponController
     private async void startReloading()
     {
         await Task.Delay(weaponData.reloadTime*1000);
-        reloadCapacity--;
+        weaponData.currentReloadCapacity--;
         isReloading = false;
-        currentCapacity=weaponData.totalCapacity;
-        Debug.Log("ReloadCapacity Left: " + reloadCapacity);
+        weaponData.currentCapacity =weaponData.totalCapacity;
     }
 
 }

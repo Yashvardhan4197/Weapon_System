@@ -10,12 +10,15 @@ public class WeaponDataSO:ScriptableObject
     public int reloadCapacity;
     public int reloadTime;
     public int currentCapacity;
+    public int currentReloadCapacity;
     public int totalCapacity;
     public float fireRate;
-    public void OnReload()
+    public TrailRenderer bulletTracer;
+
+    public void ResetData()
     {
         currentCapacity = totalCapacity;
-        reloadCapacity--;
+        currentReloadCapacity = reloadCapacity;
     }
 }
 

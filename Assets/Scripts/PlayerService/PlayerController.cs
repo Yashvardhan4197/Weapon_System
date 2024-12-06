@@ -7,7 +7,9 @@ public class PlayerController
 {
     private PlayerView playerView;
     private Transform playerTransform;
+    private Transform playerCamera;
     private CharacterController characterController;
+    private Transform crossHairPosition;
     private float xRotation;
     private float velocity;
     private float gravity;
@@ -93,4 +95,9 @@ public class PlayerController
     {
         GameService.Instance.WeaponService.SpawnWeapon(weaponNumber);
     }
+
+    public Transform GetCrossHairObjectPositon() => crossHairPosition;
+
+    public void SetCrossHairObjectPosition(Transform crossHairPosition)=>this.crossHairPosition = crossHairPosition;
+
 }

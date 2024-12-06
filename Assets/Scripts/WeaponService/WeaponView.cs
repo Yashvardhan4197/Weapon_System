@@ -6,6 +6,8 @@ public class WeaponView : MonoBehaviour
     [SerializeField] Transform muzzleTransform;
     [SerializeField] int swaySmoothness;
     [SerializeField] int swaySpeed;
+    [SerializeField] ParticleSystem muzzleFlash;
+    [SerializeField] ParticleSystem impactFlash;
     private WeaponController weaponController;
 
 
@@ -51,5 +53,8 @@ public class WeaponView : MonoBehaviour
 
 
     public Transform GetMuzzleTransform() => muzzleTransform;
+
+    public ParticleSystem GetImpactParticleSystem() => impactFlash;
+    public ParticleSystem getMuzzleParticleSystem()=>muzzleFlash;
 
 }

@@ -15,6 +15,9 @@ public class PlayerView : MonoBehaviour
     private PlayerController playerController;
     private bool isGrounded;
 
+    [SerializeField] Transform crossHairObject;
+    Ray ray;
+    RaycastHit hit;
 
     private void Start()
     {
@@ -22,6 +25,12 @@ public class PlayerView : MonoBehaviour
     }
     private void Update()
     {
+        ray.origin = playerCamera.position;
+        ray.direction=playerCamera.forward;
+        Physics.Raycast(ray, out hit);
+        crossHairObject.transform.position = hit.point;
+        playerController.SetCrossHairObjectPosition(crossHairObject.transform);
+
         isGrounded = Physics.CheckSphere(groundCheckTransform.position, groundCheckRadius, groundLayerMask);
         float mouseX = Input.GetAxisRaw("Mouse X");
         float mouseY = Input.GetAxisRaw("Mouse Y");

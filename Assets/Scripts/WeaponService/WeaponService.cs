@@ -13,6 +13,15 @@ public class WeaponService
         weaponController = new WeaponController(weaponHolder);
         this.weaponList = weaponList;
         this.weaponHolder = weaponHolder;
+        OnGameStart(); //Change after setting UI and gameLoop;
+    }
+
+    public void OnGameStart()
+    {
+        foreach (WeaponList weapon in weaponList)
+        {
+            weapon.weaponData.ResetData();
+        }
     }
 
     public void SpawnWeapon(int weaponNumber)
