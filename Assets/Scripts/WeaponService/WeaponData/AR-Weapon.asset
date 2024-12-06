@@ -17,7 +17,7 @@ MonoBehaviour:
   reloadCapacity: 2
   reloadTime: 5
   currentCapacity: 30
+  currentReloadCapacity: 2
   totalCapacity: 30
   fireRate: 5
-  impactParticleSystem: {fileID: 474370232806922053, guid: 68d6a85a6ce9f1f4a903b4dfeaeae606, type: 3}
-  muzzleFlashParticleSystem: {fileID: 3681302772659976315, guid: eee157afaa7548f4faf96e201cc480d2, type: 3}
+  bulletTracer: {fileID: 4607773794253451791, guid: 5c1ee49543afd0d479ce914c1a07d7c3, type: 3}
