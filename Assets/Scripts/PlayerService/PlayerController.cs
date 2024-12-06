@@ -17,10 +17,11 @@ public class PlayerController
     private int mouseSensitivity;
     private float jumpSpeed;
     private bool isJumped;
+    private float playerHealth;
     public int MouseSensitivity { get { return mouseSensitivity; } }
     public float MovementSpeed { get { return movementSpeed; } }
     public Transform PlayerTransform { get { return playerTransform; } }
-
+    public float PlayerHealth {  get { return playerHealth; } }
 
     public PlayerController(PlayerView playerView)
     {
@@ -100,4 +101,12 @@ public class PlayerController
 
     public void SetCrossHairObjectPosition(Transform crossHairPosition)=>this.crossHairPosition = crossHairPosition;
 
+    public void TakeDamage(float damage)
+    {
+        playerHealth -= damage;
+        if(playerHealth < 0)
+        {
+            Debug.Log("Player_Dead");
+        }
+    }
 }
