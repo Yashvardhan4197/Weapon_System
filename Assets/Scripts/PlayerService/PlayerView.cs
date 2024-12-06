@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerView : MonoBehaviour
+public class PlayerView : MonoBehaviour,IDamageAble
 {
     [SerializeField] Transform playerCamera;
     [SerializeField] int mouseSensitivity;
@@ -68,5 +68,10 @@ public class PlayerView : MonoBehaviour
         playerController.SetMovementSpeed(movementSpeed);
         playerController.SetGravity(gravity);
         playerController.SetJumpSpeed(jumpSpeed);
+    }
+
+    public void TakeDamage(float damage)
+    {
+        playerController.TakeDamage(damage);
     }
 }
