@@ -21,3 +21,5 @@ MonoBehaviour:
   fireRate: 10
   bulletTracer: {fileID: 4607773794253451791, guid: 5c1ee49543afd0d479ce914c1a07d7c3, type: 3}
   aimPosition: {fileID: 5616074850740158091, guid: 158b83a5b29b1de4eb84fdd35a07e1db, type: 3}
+  shootSound: 3
+  reloadSound: 1

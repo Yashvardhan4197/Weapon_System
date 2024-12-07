@@ -16,7 +16,8 @@ public class WeaponDataSO:ScriptableObject
     [SerializeField] float fireRate;
     [SerializeField] TrailRenderer bulletTracer;
     [SerializeField] Transform aimPosition;
-
+    [SerializeField] SoundType shootSound;
+    [SerializeField] SoundType reloadSound;
 
     //Fields
     public string WeaponName { get { return  weaponName; } }
@@ -30,7 +31,8 @@ public class WeaponDataSO:ScriptableObject
     public float FireRate { get {  return fireRate; } }
     public Transform AimPosition { get {  return aimPosition; } }
     public TrailRenderer BulletTracer { get { return bulletTracer; } }
-
+    public SoundType ShootSound { get { return shootSound; } }
+    public SoundType ReloadSound { get { return reloadSound; } }
 
     public void ResetData()
     {

@@ -40,6 +40,7 @@ public class WeaponController
         muzzleParticleSystem = weaponView.getMuzzleParticleSystem();
         GameService.Instance.UIService.GetWeaponUIController().SetWeaponInfo(weaponData.WeaponName);
         GameService.Instance.UIService.GetWeaponUIController().SetMagInfo(weaponData.CurrentMagCapacity, weaponData.CurrentTotalBullets);
+        GameService.Instance.SoundService.PlaySFXSound(SoundType.WEAPON_CHANGE);
     }
 
     public void Shoot()
@@ -72,6 +73,7 @@ public class WeaponController
             }
             weaponData.SetCurrentMagCapacity(weaponData.CurrentMagCapacity-1);
             GameService.Instance.UIService.GetWeaponUIController().SetMagInfo(weaponData.CurrentMagCapacity, weaponData.CurrentTotalBullets);
+            GameService.Instance.SoundService.PlaySFXSound(weaponData.ShootSound);
         }
     }
 
@@ -81,6 +83,7 @@ public class WeaponController
         {
             isReloading=true;
             startReloading();
+            GameService.Instance.SoundService.PlayBackgroundSound(weaponData.ReloadSound);
         }
     }
 
@@ -100,6 +103,8 @@ public class WeaponController
         }
         isReloading = false;
         GameService.Instance.UIService.GetWeaponUIController().SetMagInfo(weaponData.CurrentMagCapacity, weaponData.CurrentTotalBullets);
+        GameService.Instance.SoundService.PlayBackgroundSound(SoundType.NONE);
+        GameService.Instance.SoundService.PlaySFXSound(SoundType.RELOAD_COMPLETE);
     }
 
     public void SetAimWeapon()
