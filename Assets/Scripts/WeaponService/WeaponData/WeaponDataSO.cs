@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName ="WeaponData",menuName ="ScriptableObjects/NewWeaponData")]
 public class WeaponDataSO:ScriptableObject
 {
+    [SerializeField] string weaponName;
     [SerializeField] int damage;
     [SerializeField] int range;
     [SerializeField] int reloadTime;
@@ -18,6 +19,7 @@ public class WeaponDataSO:ScriptableObject
 
 
     //Fields
+    public string WeaponName { get { return  weaponName; } }
     public int Damage {  get { return damage; } }
     public int Range { get { return range; } }
     public int ReloadTime { get {  return reloadTime; } }

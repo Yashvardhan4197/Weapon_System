@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75c38565a2bee44469bb6d95219c95a5, type: 3}
   m_Name: AR-Weapon
   m_EditorClassIdentifier: 
+  weaponName: AR
   damage: 50
   range: 500
   reloadTime: 5

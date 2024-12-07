@@ -8,6 +8,7 @@ public class WeaponService
     private WeaponController weaponController;
     private WeaponView currentSpawnedWeapon;
     private Transform weaponHolder;
+    private int currentWeaponSelected;
     private Dictionary<int, WeaponView> spawnedWeapons=new Dictionary<int, WeaponView>();
     public WeaponService(List<WeaponList> weaponList, Transform weaponHolder)
     {
@@ -30,6 +31,7 @@ public class WeaponService
     private void SpawnWeapons()
     {
         int i = 1;
+        currentWeaponSelected = 0;
         foreach(WeaponList weapon in weaponList)
         {
             currentSpawnedWeapon = Object.Instantiate(weapon.weaponView);
@@ -45,12 +47,17 @@ public class WeaponService
 
     public void UseWeapon(int weaponNumber)
     {
-        if(weaponNumber<=weaponList.Count&&weaponNumber!=0)
+
+        if((weaponNumber<=weaponList.Count&&weaponNumber!=0))
         {
-            currentSpawnedWeapon?.gameObject.SetActive(false);
-            weaponController.SetView(spawnedWeapons[weaponNumber], weaponList[weaponNumber-1].weaponData);
-            spawnedWeapons[weaponNumber].gameObject.SetActive(true);
-            currentSpawnedWeapon = spawnedWeapons[weaponNumber];
+            if (currentWeaponSelected == 0 || currentWeaponSelected != weaponNumber)
+            {
+                currentSpawnedWeapon?.gameObject.SetActive(false);
+                weaponController.SetView(spawnedWeapons[weaponNumber], weaponList[weaponNumber - 1].weaponData);
+                spawnedWeapons[weaponNumber].gameObject.SetActive(true);
+                currentSpawnedWeapon = spawnedWeapons[weaponNumber];
+                currentWeaponSelected = weaponNumber;
+            }
         }
         
     }

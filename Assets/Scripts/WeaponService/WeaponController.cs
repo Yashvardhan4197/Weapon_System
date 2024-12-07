@@ -21,9 +21,14 @@ public class WeaponController
 
     public void SetView(WeaponView weaponView,WeaponDataSO weaponDataSO)
     {
-        isAiming = true;
+        if(this.weaponView==null)
+        {
+            GameService.Instance.UIService.GetWeaponUIController().OpenWeaponUI();
+            GameService.Instance.UIService.GetWeaponUIController().SetCrossHair(true);
+        }
         if (this.weaponView != null)
         {
+            isAiming = true;
             SetAimWeapon();
         }
         this.weaponView = weaponView;
@@ -33,6 +38,8 @@ public class WeaponController
         nextTimeToFire = 0f;
         impactParticleSystem = weaponView.GetImpactParticleSystem();
         muzzleParticleSystem = weaponView.getMuzzleParticleSystem();
+        GameService.Instance.UIService.GetWeaponUIController().SetWeaponInfo(weaponData.WeaponName);
+        GameService.Instance.UIService.GetWeaponUIController().SetMagInfo(weaponData.CurrentMagCapacity, weaponData.CurrentTotalBullets);
     }
 
     public void Shoot()
@@ -64,6 +71,7 @@ public class WeaponController
                 }
             }
             weaponData.SetCurrentMagCapacity(weaponData.CurrentMagCapacity-1);
+            GameService.Instance.UIService.GetWeaponUIController().SetMagInfo(weaponData.CurrentMagCapacity, weaponData.CurrentTotalBullets);
         }
     }
 
@@ -78,8 +86,6 @@ public class WeaponController
 
     private async void startReloading()
     {
-        Debug.Log("Total Bullets in Mag: " + weaponData.CurrentMagCapacity);
-        Debug.Log("Total Bullets in bag: " + weaponData.CurrentTotalBullets);
         await Task.Delay(weaponData.ReloadTime*1000);
         int neededBullets = weaponData.TotalMagCapacity - weaponData.CurrentMagCapacity;
         if(weaponData.CurrentTotalBullets>=neededBullets)
@@ -93,8 +99,7 @@ public class WeaponController
             weaponData.SetCurrentTotalBullets(0);
         }
         isReloading = false;
-        Debug.Log("Total Bullets in Mag: "+weaponData.CurrentMagCapacity);
-        Debug.Log("Total Bullets in bag: "+weaponData.CurrentTotalBullets);
+        GameService.Instance.UIService.GetWeaponUIController().SetMagInfo(weaponData.CurrentMagCapacity, weaponData.CurrentTotalBullets);
     }
 
     public void SetAimWeapon()
@@ -104,12 +109,14 @@ public class WeaponController
             weaponView.transform.localPosition = Vector3.MoveTowards(weaponData.AimPosition.localPosition, new Vector3(0, 0, 0), 100 * Time.deltaTime);
             weaponView.transform.localRotation = Quaternion.Slerp(weaponData.AimPosition.localRotation, Quaternion.identity, 100 * Time.deltaTime);
             isAiming = false;
+            GameService.Instance.UIService.GetWeaponUIController().OnWeaponAim(true);
         }
         else
         {
             weaponView.transform.localPosition = Vector3.MoveTowards(new Vector3(0, 0, 0), weaponData.AimPosition.localPosition, 100*Time.deltaTime);
             weaponView.transform.localRotation = Quaternion.Slerp(Quaternion.identity,weaponData.AimPosition.localRotation, 100 * Time.deltaTime);
             isAiming =true;
+            GameService.Instance.UIService.GetWeaponUIController().OnWeaponAim(false);
         }
     }
 }

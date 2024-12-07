@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75c38565a2bee44469bb6d95219c95a5, type: 3}
   m_Name: Pistol-Weapon
   m_EditorClassIdentifier: 
+  weaponName: PISTOL
   damage: 25
   range: 100
   reloadTime: 2
