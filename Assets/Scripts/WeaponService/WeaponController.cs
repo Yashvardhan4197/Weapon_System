@@ -1,5 +1,4 @@
 ﻿
-using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
 
@@ -38,14 +37,14 @@ public class WeaponController
 
     public void Shoot()
     {
-        if (isReloading == false&& weaponData.currentCapacity>0 && Time.time>=nextTimeToFire)
+        if (isReloading == false&& weaponData.CurrentMagCapacity>0 && Time.time>=nextTimeToFire)
         {
-            nextTimeToFire = Time.time + (1 / weaponData.fireRate);
+            nextTimeToFire = Time.time + (1 / weaponData.FireRate);
             Ray ray=new Ray();
             RaycastHit Hit;
             ray.origin = weaponView.GetMuzzleTransform().position;
             ray.direction = GameService.Instance.PlayerService.GetPlayerController().GetCrossHairObjectPositon().position - weaponView.GetMuzzleTransform().position;
-            if (Physics.Raycast(ray, out Hit, weaponData.range))
+            if (Physics.Raycast(ray, out Hit, weaponData.Range))
             {
                 impactParticleSystem.transform.position = Hit.point;
                 impactParticleSystem.transform.forward = Hit.normal;
@@ -55,22 +54,22 @@ public class WeaponController
                 muzzleParticleSystem.transform.forward= weaponView.GetMuzzleTransform().forward;
                 muzzleParticleSystem.Emit(1);
 
-                var tracer= Object.Instantiate(weaponData.bulletTracer,ray.origin,Quaternion.identity);
+                var tracer= Object.Instantiate(weaponData.BulletTracer,ray.origin,Quaternion.identity);
                 tracer.AddPosition(ray.origin);
                 tracer.transform.position = Hit.point;
                 IDamageAble damageAbleObject=Hit.transform.GetComponent<IDamageAble>();
                 if(damageAbleObject!=null)
                 {
-                    damageAbleObject.TakeDamage(weaponData.damage);
+                    damageAbleObject.TakeDamage(weaponData.Damage);
                 }
             }
-            weaponData.currentCapacity--;
+            weaponData.SetCurrentMagCapacity(weaponData.CurrentMagCapacity-1);
         }
     }
 
     public void ReloadWeapon()
     {
-        if(weaponData.currentCapacity <weaponData.totalCapacity && weaponData.currentReloadCapacity>0)
+        if(weaponData.CurrentMagCapacity <weaponData.TotalMagCapacity && weaponData.CurrentTotalBullets>0)
         {
             isReloading=true;
             startReloading();
@@ -79,24 +78,37 @@ public class WeaponController
 
     private async void startReloading()
     {
-        await Task.Delay(weaponData.reloadTime*1000);
-        weaponData.currentReloadCapacity--;
+        Debug.Log("Total Bullets in Mag: " + weaponData.CurrentMagCapacity);
+        Debug.Log("Total Bullets in bag: " + weaponData.CurrentTotalBullets);
+        await Task.Delay(weaponData.ReloadTime*1000);
+        int neededBullets = weaponData.TotalMagCapacity - weaponData.CurrentMagCapacity;
+        if(weaponData.CurrentTotalBullets>=neededBullets)
+        {
+            weaponData.SetCurrentTotalBullets(weaponData.CurrentTotalBullets-neededBullets);
+            weaponData.SetCurrentMagCapacity(weaponData.CurrentMagCapacity + neededBullets);
+        }
+        else
+        {
+            weaponData.SetCurrentMagCapacity(weaponData.CurrentMagCapacity + weaponData.CurrentTotalBullets);
+            weaponData.SetCurrentTotalBullets(0);
+        }
         isReloading = false;
-        weaponData.currentCapacity =weaponData.totalCapacity;
+        Debug.Log("Total Bullets in Mag: "+weaponData.CurrentMagCapacity);
+        Debug.Log("Total Bullets in bag: "+weaponData.CurrentTotalBullets);
     }
 
     public void SetAimWeapon()
     {
         if(isAiming)
         {
-            weaponView.transform.localPosition = Vector3.MoveTowards(weaponData.aimPosition.localPosition, new Vector3(0, 0, 0), 100 * Time.deltaTime);
-            weaponView.transform.localRotation = Quaternion.Slerp(weaponData.aimPosition.localRotation, Quaternion.identity, 100 * Time.deltaTime);
+            weaponView.transform.localPosition = Vector3.MoveTowards(weaponData.AimPosition.localPosition, new Vector3(0, 0, 0), 100 * Time.deltaTime);
+            weaponView.transform.localRotation = Quaternion.Slerp(weaponData.AimPosition.localRotation, Quaternion.identity, 100 * Time.deltaTime);
             isAiming = false;
         }
         else
         {
-            weaponView.transform.localPosition = Vector3.MoveTowards(new Vector3(0, 0, 0), weaponData.aimPosition.localPosition, 100*Time.deltaTime);
-            weaponView.transform.localRotation = Quaternion.Slerp(Quaternion.identity,weaponData.aimPosition.localRotation, 100 * Time.deltaTime);
+            weaponView.transform.localPosition = Vector3.MoveTowards(new Vector3(0, 0, 0), weaponData.AimPosition.localPosition, 100*Time.deltaTime);
+            weaponView.transform.localRotation = Quaternion.Slerp(Quaternion.identity,weaponData.AimPosition.localRotation, 100 * Time.deltaTime);
             isAiming =true;
         }
     }
