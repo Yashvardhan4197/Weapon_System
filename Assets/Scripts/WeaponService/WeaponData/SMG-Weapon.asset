@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75c38565a2bee44469bb6d95219c95a5, type: 3}
   m_Name: SMG-Weapon
   m_EditorClassIdentifier: 
-  weaponName: PISTOL
-  damage: 25
-  range: 100
-  reloadTime: 2
-  totalBullets: 60
-  totalMagCapacity: 10
-  fireRate: 15
+  weaponName: SMG
+  damage: 45
+  range: 150
+  reloadTime: 3
+  totalBullets: 85
+  totalMagCapacity: 25
+  fireRate: 23
   bulletTracer: {fileID: 4607773794253451791, guid: 5c1ee49543afd0d479ce914c1a07d7c3, type: 3}
-  aimPosition: {fileID: 6603102565512828372, guid: 29438f3583550e940af8bcb0e420ee9e, type: 3}
+  aimPosition: {fileID: 3861148686260824827, guid: b9925d02c389b684293d619309c5eec9, type: 3}
