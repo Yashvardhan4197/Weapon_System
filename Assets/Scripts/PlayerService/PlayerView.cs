@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class PlayerView : MonoBehaviour,IDamageAble
@@ -58,6 +57,9 @@ public class PlayerView : MonoBehaviour,IDamageAble
         }else if(Input.GetKey(KeyCode.Alpha3))
         {
             playerController.SpawnWeapon(3);
+        }else if(Input.GetKey(KeyCode.Alpha4))
+        {
+            playerController.SpawnWeapon(4);
         }
     }
 
