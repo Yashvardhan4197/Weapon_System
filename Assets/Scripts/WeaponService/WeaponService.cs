@@ -64,10 +64,3 @@ public class WeaponService
 
     public WeaponController GetWeaponController() => weaponController;
 }
-
-[System.Serializable]
-public class WeaponList
-{
-    public WeaponView weaponView;
-    public WeaponDataSO weaponData;
-}
