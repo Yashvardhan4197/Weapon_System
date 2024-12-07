@@ -49,6 +49,10 @@ public class WeaponView : MonoBehaviour
         {
             weaponController?.Shoot();
         }
+        if(Input.GetMouseButtonDown(1))
+        {
+            weaponController?.SetAimWeapon();
+        }
     }
 
 

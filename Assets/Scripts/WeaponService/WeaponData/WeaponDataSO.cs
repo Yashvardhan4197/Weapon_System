@@ -14,7 +14,7 @@ public class WeaponDataSO:ScriptableObject
     public int totalCapacity;
     public float fireRate;
     public TrailRenderer bulletTracer;
-
+    public Transform aimPosition;
     public void ResetData()
     {
         currentCapacity = totalCapacity;

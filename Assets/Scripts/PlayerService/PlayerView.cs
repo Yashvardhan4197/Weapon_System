@@ -12,6 +12,7 @@ public class PlayerView : MonoBehaviour,IDamageAble
     [SerializeField] Transform groundCheckTransform;
     [SerializeField] float groundCheckRadius;
     [SerializeField] LayerMask groundLayerMask;
+    [SerializeField] Transform aimPosition;
     private PlayerController playerController;
     private bool isGrounded;
 

@@ -12,6 +12,7 @@ public class WeaponController
     private float nextTimeToFire;
     private ParticleSystem impactParticleSystem;
     private ParticleSystem muzzleParticleSystem;
+    private bool isAiming;
     public Transform WeaponHolderTransform { get { return weaponHolderTransform; } }
 
     public WeaponController(Transform weaponHolderTransform)
@@ -21,6 +22,11 @@ public class WeaponController
 
     public void SetView(WeaponView weaponView,WeaponDataSO weaponDataSO)
     {
+        isAiming = true;
+        if (this.weaponView != null)
+        {
+            SetAimWeapon();
+        }
         this.weaponView = weaponView;
         this.weaponData = weaponDataSO;
         weaponView.SetController(this);
@@ -79,4 +85,19 @@ public class WeaponController
         weaponData.currentCapacity =weaponData.totalCapacity;
     }
 
+    public void SetAimWeapon()
+    {
+        if(isAiming)
+        {
+            weaponView.transform.localPosition = Vector3.MoveTowards(weaponData.aimPosition.localPosition, new Vector3(0, 0, 0), 100 * Time.deltaTime);
+            weaponView.transform.localRotation = Quaternion.Slerp(weaponData.aimPosition.localRotation, Quaternion.identity, 100 * Time.deltaTime);
+            isAiming = false;
+        }
+        else
+        {
+            weaponView.transform.localPosition = Vector3.MoveTowards(new Vector3(0, 0, 0), weaponData.aimPosition.localPosition, 100*Time.deltaTime);
+            weaponView.transform.localRotation = Quaternion.Slerp(Quaternion.identity,weaponData.aimPosition.localRotation, 100 * Time.deltaTime);
+            isAiming =true;
+        }
+    }
 }
