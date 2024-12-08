@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class InGameUiController
 {
@@ -27,12 +28,19 @@ public class InGameUiController
     {
         inGameUIView.gameObject.SetActive(true);
         Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     public void OnGameUnPaused()
     {
         inGameUIView.gameObject.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
+    public void ResetBulletData()
+    {
+        GameService.Instance.RESETWEAPONDATA?.Invoke();
+        GameService.Instance.WeaponService.GetWeaponController().OnWeaponDataReset();
+    }
 }

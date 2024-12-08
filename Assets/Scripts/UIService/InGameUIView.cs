@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class InGameUIView : MonoBehaviour
 {
+    [SerializeField] Button resetBullets;
     [SerializeField] Button resumeGameButton;
     [SerializeField] Button exitGameButton;
     private InGameUiController inGameUiController;
@@ -13,6 +14,7 @@ public class InGameUIView : MonoBehaviour
     {
         resumeGameButton.onClick.AddListener(OnResumeButtonClicked);
         exitGameButton.onClick.AddListener(OnExitButtonClicked);
+        resetBullets.onClick.AddListener(onResetBulletsButtonClicked);
         this.gameObject.SetActive(false);
     }
 
@@ -30,5 +32,9 @@ public class InGameUIView : MonoBehaviour
     private void OnResumeButtonClicked()
     {
         inGameUiController.UnPauseGame();
+    }
+    private void onResetBulletsButtonClicked()
+    {
+        inGameUiController.ResetBulletData();
     }
 }

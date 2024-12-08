@@ -16,6 +16,7 @@ public class WeaponService
         this.weaponList = weaponList;
         this.weaponHolder = weaponHolder;
         OnGameStart();
+        GameService.Instance.RESETWEAPONDATA+=ResetWeaponData;
     }
 
     public void OnGameStart()
@@ -61,6 +62,15 @@ public class WeaponService
         }
         
     }
+
+    public void ResetWeaponData()
+    {
+        foreach(var weapon in weaponList)
+        {
+            weapon.weaponData.ResetData();
+        }
+    }
+
 
     public WeaponController GetWeaponController() => weaponController;
 }

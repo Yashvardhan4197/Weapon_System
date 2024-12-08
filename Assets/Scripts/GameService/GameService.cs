@@ -46,7 +46,7 @@ public class GameService : MonoBehaviour
     //EVENTS
     public UnityAction PAUSEGAME;
     public UnityAction UNPAUSEGAME;
-    public UnityAction RESETBULLETS;
+    public UnityAction RESETWEAPONDATA;
     private void Init()
     {
         playerService = new PlayerService(playerView,playerhealth);

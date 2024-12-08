@@ -139,4 +139,9 @@ public class WeaponController
     {
         isPaused = false;
     }
+
+    public void OnWeaponDataReset()
+    {
+        GameService.Instance.UIService.GetWeaponUIController().SetMagInfo(weaponData.CurrentMagCapacity, weaponData.CurrentTotalBullets);
+    }
 }
