@@ -26,24 +26,32 @@ public class PlayerView : MonoBehaviour,IDamageAble
     }
     private void Update()
     {
-        ray.origin = playerCamera.position;
-        ray.direction=playerCamera.forward;
-        Physics.Raycast(ray, out hit);
-        crossHairObject.transform.position = hit.point;
-        playerController.SetCrossHairObjectPosition(crossHairObject.transform);
+        if (playerController.GetPuseStatus() == false)
+        {
+            ray.origin = playerCamera.position;
+            ray.direction = playerCamera.forward;
+            Physics.Raycast(ray, out hit);
+            crossHairObject.transform.position = hit.point;
+            playerController.SetCrossHairObjectPosition(crossHairObject.transform);
 
-        isGrounded = Physics.CheckSphere(groundCheckTransform.position, groundCheckRadius, groundLayerMask);
-        float mouseX = Input.GetAxisRaw("Mouse X");
-        float mouseY = Input.GetAxisRaw("Mouse Y");
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
-        bool jump = Input.GetButtonDown("Jump");
+            isGrounded = Physics.CheckSphere(groundCheckTransform.position, groundCheckRadius, groundLayerMask);
+            float mouseX = Input.GetAxisRaw("Mouse X");
+            float mouseY = Input.GetAxisRaw("Mouse Y");
+            float horizontal = Input.GetAxisRaw("Horizontal");
+            float vertical = Input.GetAxisRaw("Vertical");
+            bool jump = Input.GetButtonDown("Jump");
 
-        CheckWeaponSpawner();
+            CheckWeaponSpawner();
 
-        playerController.RotatePlayer(mouseX, mouseY,playerCamera);
-        playerController.MovePlayer(horizontal,vertical,isGrounded);
-        if (isGrounded) { playerController.PerformJump(jump); }
+            playerController.RotatePlayer(mouseX, mouseY, playerCamera);
+            playerController.MovePlayer(horizontal, vertical, isGrounded);
+            if (isGrounded) { playerController.PerformJump(jump); }
+        }
+
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            playerController.OnEscapeKeyClicked();
+        }
     }
 
     private void CheckWeaponSpawner()

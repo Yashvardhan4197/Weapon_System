@@ -18,9 +18,12 @@ public class WeaponView : MonoBehaviour
 
     private void Update()
     {
-        AddSwayInMotion();
-        Shoot();
-        ReloadWeapon();
+        if (weaponController.gamePauseStatus() == false)
+        {
+            AddSwayInMotion();
+            Shoot();
+            ReloadWeapon();
+        }
     }
 
     private void ReloadWeapon()

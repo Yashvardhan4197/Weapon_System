@@ -16,6 +16,7 @@ public class PlayerController
     private int mouseSensitivity;
     private float jumpSpeed;
     private float playerHealth;
+    private bool gamePaused;
     public int MouseSensitivity { get { return mouseSensitivity; } }
     public float MovementSpeed { get { return movementSpeed; } }
     public Transform PlayerTransform { get { return playerTransform; } }
@@ -28,6 +29,9 @@ public class PlayerController
         playerTransform=playerView.transform;
         playerView.SetController(this);
         this.playerHealth = playerHealth;
+        gamePaused = false;
+        GameService.Instance.PAUSEGAME += OnGamePaused;
+        GameService.Instance.UNPAUSEGAME += OnGameUnPaused;
     }
 
     public void RotatePlayer(float mouseX, float mouseY, Transform playerCamera)
@@ -112,4 +116,28 @@ public class PlayerController
     {
         playerHealth = health;
     }
+
+    public void OnGamePaused()
+    {
+        gamePaused = true;
+    }
+
+    public void OnGameUnPaused()
+    {
+        gamePaused = false;
+    }
+    public bool GetPuseStatus() => gamePaused;
+
+    public void OnEscapeKeyClicked()
+    {
+        if(gamePaused==false)
+        {
+            GameService.Instance.PAUSEGAME();
+        }
+        else
+        {
+            GameService.Instance.UNPAUSEGAME();
+        }
+    }
+
 }

@@ -12,11 +12,15 @@ public class WeaponController
     private ParticleSystem impactParticleSystem;
     private ParticleSystem muzzleParticleSystem;
     private bool isAiming;
+    private bool isPaused;
     public Transform WeaponHolderTransform { get { return weaponHolderTransform; } }
 
     public WeaponController(Transform weaponHolderTransform)
     {
         this.weaponHolderTransform = weaponHolderTransform;
+        isPaused = false;
+        GameService.Instance.PAUSEGAME += OnGamePaused;
+        GameService.Instance.UNPAUSEGAME += OnGameUnPaused;
     }
 
     public void SetView(WeaponView weaponView,WeaponDataSO weaponDataSO)
@@ -123,5 +127,16 @@ public class WeaponController
             isAiming =true;
             GameService.Instance.UIService.GetWeaponUIController().OnWeaponAim(false);
         }
+    }
+
+    public bool gamePauseStatus() => isPaused;
+    public void OnGamePaused()
+    {
+        isPaused = true;
+    }
+
+    public void OnGameUnPaused()
+    {
+        isPaused = false;
     }
 }

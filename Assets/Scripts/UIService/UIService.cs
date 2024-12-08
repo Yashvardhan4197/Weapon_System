@@ -3,12 +3,15 @@
 public class UIService
 {
     private WeaponUIController weaponUIController;
-    public UIService(WeaponUIView weaponUIView) 
+    private InGameUiController inGameUiController;
+    public UIService(WeaponUIView weaponUIView,InGameUIView inGameUIView) 
     {
         weaponUIController= new WeaponUIController(weaponUIView);
+        inGameUiController = new InGameUiController(inGameUIView);
     }
     
     public WeaponUIController GetWeaponUIController()=>weaponUIController;
 
+    public InGameUiController GetInGameUiController() => inGameUiController;
 
 }

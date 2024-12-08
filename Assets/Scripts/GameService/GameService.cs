@@ -1,6 +1,7 @@
 
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameService : MonoBehaviour
 {
@@ -30,7 +31,7 @@ public class GameService : MonoBehaviour
     [SerializeField] AudioSource sFXAudioSource;
     [SerializeField] AudioSource bgAudioSource;
     [SerializeField] Sound[] soundCollection;
-
+    [SerializeField] InGameUIView inGameUIView;
 
     //Services
     private PlayerService playerService;
@@ -42,17 +43,16 @@ public class GameService : MonoBehaviour
     public UIService UIService { get {  return uIService; } }
     public SoundService SoundService { get { return soundService; } }
 
+    //EVENTS
+    public UnityAction PAUSEGAME;
+    public UnityAction UNPAUSEGAME;
+    public UnityAction RESETBULLETS;
     private void Init()
     {
         playerService = new PlayerService(playerView,playerhealth);
         weaponService = new WeaponService(weaponList, weaponHolder);
         soundService = new SoundService(sFXAudioSource, bgAudioSource, soundCollection);
-        uIService=new UIService(weaponUIView);
-    }
-
-    public void OnSceneChange()
-    {
-
+        uIService=new UIService(weaponUIView,inGameUIView);
     }
 
 
