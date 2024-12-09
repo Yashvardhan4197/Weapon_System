@@ -2,6 +2,10 @@
 A modular and scalable weapon system for Unity 3D, designed with clean architecture and robust design patterns for maintainability, flexibility, and ease of integration.
 ---
 
+## PLAY ON: https://yashvardhan1.itch.io/weapon-system
+
+---
+
 ## Features
 
 - Custom FPS Controller
